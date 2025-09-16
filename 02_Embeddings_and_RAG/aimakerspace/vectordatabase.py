@@ -14,7 +14,7 @@ def cosine_similarity(vector_a: np.array, vector_b: np.array) -> float:
 
 
 class VectorDatabase:
-    def __init__(self, embedding_model: EmbeddingModel = None):
+    def __init__(self, embedding_model: Union[EmbeddingModel,BaseEmbeddingModel] = None):
         self.vectors = defaultdict(np.array)
         self.embedding_model = embedding_model or EmbeddingModel()
 
