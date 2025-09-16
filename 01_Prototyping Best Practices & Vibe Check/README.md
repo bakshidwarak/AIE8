@@ -94,9 +94,9 @@ I made the following changes
 
 
 ##### Results:
-1. _Comment here how the change(s) impacted the vibe check of your system_
-2. 
-3. 
+1. LLM generated options
+2. Better decision making
+3. Implementation plan in a readable format
 4. 
 5.
 
