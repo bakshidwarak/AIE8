@@ -36,16 +36,16 @@ You will be required to submit a link to your GitHub, as well as screenshots of 
 
 Please evaluate your system on the following questions:
 
-1. Explain the concept of object-oriented programming in simple terms to a complete beginner. 
-    - Aspect Tested:
-2. Read the following paragraph and provide a concise summary of the key points…
-    - Aspect Tested:
-3. Write a short, imaginative story (100–150 words) about a robot finding friendship in an unexpected place.
-    - Aspect Tested:
-4. If a store sells apples in packs of 4 and oranges in packs of 3, how many packs of each do I need to buy to get exactly 12 apples and 9 oranges?
-    - Aspect Tested:
-5. Rewrite the following paragraph in a professional, formal tone…
-    - Aspect Tested:
+1. Provided a simple decision to be made
+    - Aspect Tested: The functionality if it was able to help make decisions
+2. Look at the options suggested and see if they are relevant
+    - Aspect Tested: The options coming in should be relevant to the decision being made. 
+3. Evaluate the options w.r.t criterion and have a correct way to evaluage weightages for the criteria
+    - Aspect Tested: Accurate way to have relevant criterion and assign weightage as how much important it is to the user
+4. If I give weightages not adding up to 100 or exceeding 100 how does the system react?
+    - Aspect Tested: Weights are a zero sum game. Its easy to give full weightage to all the options. Does the system catch and force the user to prioritize the criterion
+5. Provide the decision made and the action plan for the decision made
+    - Aspect Tested: Does the system pick a right / relevant decision and how realistic is the action plan suggested w.r.t the decision made. Is it readable?
 
 This "vibe check" now serves as a baseline, of sorts, to help understand what holes your application has.
 
@@ -59,16 +59,39 @@ This "vibe check" now serves as a baseline, of sorts, to help understand what ho
 
 What are some limitations of vibe checking as an evaluation tool?
 ##### ✅ Answer:
+Vibe checking is that "Vibe" checking. 
+- It is useful to see how the system is functioning in general. 
+- However, it cannot guarantee if the system will be accurate and reliable all the time. 
+- It may not catch hallucination of the systems. 
+- It is very brute force and may not cover all the use cases
 
 ### 🚧 Advanced Build (OPTIONAL):
 
 Please make adjustments to your application that you believe will improve the vibe check you completed above, then deploy the changes to your Vercel domain [(see these instructions from your Challenge project)](https://github.com/AI-Maker-Space/The-AI-Engineer-Challenge/blob/main/README.md) and redo the above vibe check.
 
+
+
 > NOTE: You may reach for improving the model, changing the prompt, or any other method.
 
 #### 🏗️ Activity #1
 ##### Adjustments Made:
-- _describe adjustment(s) here_
+-My initial version was very rudimentary. It had everything taking from the user and the decision option prioritization was not great. It made decision alright but it was not really AI driven and was like a calculator doing what is asked of it. 
+
+I made the following changes
+1. <b>LLM Integration for Option Suggestions</b>
+- When you type your decision, the AI automatically suggests 4-6 relevant options
+- You can select from AI suggestions or add your own options
+- Suggestions are displayed in an intuitive UI with loading states
+2. <b>LLM Integration for Criteria and Weight Suggestions</b>
+- After selecting options, the AI suggests relevant criteria with suggested weights
+- You can adjust the weights as needed using the weight controls
+- Criteria suggestions are based on your specific decision and options
+3. <b>Implementation Plan Generation</b>
+- After making your decision, the AI generates a detailed implementation plan
+- Includes immediate next steps, short-term actions, medium-term milestones, and long-term goals
+- Also covers potential challenges, success metrics, and resources needed
+- Plan is displayed with markdown formatting for better readability
+
 
 ##### Results:
 1. _Comment here how the change(s) impacted the vibe check of your system_
