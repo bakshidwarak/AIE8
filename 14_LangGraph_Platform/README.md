@@ -39,7 +39,7 @@ Run the repository and complete the following:
 Compare the `agent` and `agent_helpful` assistants defined in `langgraph.json`. Where does the helpfulness evaluator fit in the graph, and under what condition should execution route back to the agent vs. terminate?
 
 ##### ✅ Answer:
-_(enter answer here)_
+Agent is a simple agent graph that gets the tools and performs the action for the query posed. In this case it makes a call to Tavilly to search for the query and presents the answer. In the case of agent_helpful another step is added after the action is performed to evaluate if the provided answer is helpful to the user. If it is NO the loop continues till a threshold and returns the answer to the user
 
 #### 🏗️ Activity #1 Debugging A Graph
 
@@ -50,7 +50,8 @@ Select the `agent_with_helpfulness` and set one or more interrupts (at least one
 What are your thoughts on when you would use a Before interrupt vs. an After interrupt?
 
 ##### ✅ Answer:
-_(enter answer here)_
+Before Interrupt -  when you need to review or modify the state before a node performs its main action
+After Interrupt when you need to review, edit, or route based on the output of a node's execution
 
 
 
