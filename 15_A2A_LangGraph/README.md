@@ -87,7 +87,7 @@ Do this by creating a Simple Agent that can make API calls to the 🤖Agent Node
 What are the core components of an `AgentCard`?
 
 ##### ✅ Answer:
-
+The Agent Card is a standardized, machine-readable metadata document—often a JSON file located at a well-known URL (e.g., /.well-known/agent.json)—that serves as an agent's digital identity card in the A2A (Agent-to-Agent) protocol. Its primary purpose is to enable other agents and client applications to discover, understand, and interact with the agent.
 <br />
 
 ### ❓ Question #2:
@@ -95,7 +95,7 @@ What are the core components of an `AgentCard`?
 Why is A2A (and other such protocols) important in your own words?
 
 ##### ✅ Answer:
-
+IMO A2A and MCP and all such protocols are critical to ensure interoperability between Agents built on different frameworks. A2A especially also helps in discovery of Agents( using AgentCards). 
 <br /><br />
 
 <details>
