@@ -111,3 +111,87 @@ def create_langgraph_agent(
     graph.add_edge("action", "agent")
     
     return graph.compile()
+
+def create_langgraph_helpfulness_agent(
+    model_name: str = "gpt-4",
+    temperature: float = 0.1,
+    tools: Optional[List] = None,
+    rag_chain: Optional[ProductionRAGChain] = None
+):
+    """Create a simple LangGraph helpfulness agent.
+    
+    Args:
+        model_name: OpenAI model name
+        temperature: Model temperature
+        tools: List of tools to bind to the model
+        rag_chain: Optional RAG chain to include as a tool
+        
+    Returns:
+        Compiled LangGraph agent
+    """
+    if tools is None:
+        tools = get_default_tools(rag_chain)
+    
+    # Get model and bind tools
+    helpfulness_check_model = get_openai_model(model_name=model_name, temperature=temperature)
+    model_with_tools = helpfulness_check_model.bind_tools(tools)
+    
+    def call_model(state: AgentState) -> Dict[str, Any]:
+        """Invoke the model with messages."""
+        messages = state["messages"]
+        response = model_with_tools.invoke(messages)
+        return {"messages": [response]}
+    
+    def should_continue(state: AgentState):
+        """Route to tools if the last message has tool calls."""
+        last_message = state["messages"][-1]
+        if getattr(last_message, "tool_calls", None):
+            return "action"
+        return END
+    
+    def tool_call_or_helpful(state: AgentState):
+        """Check if the final response is helpful."""
+
+        last_message = state["messages"][-1]
+
+        if last_message.tool_calls:
+            return "action"
+
+        initial_query = state["messages"][0]
+        final_response = state["messages"][-1]
+
+        if len(state["messages"]) > 10:
+            return END
+
+        prompt_template = """\
+            Given an initial query and a final response, determine if the final response is extremely helpful or not. Please indicate helpfulness with a 'Y' and unhelpfulness as an 'N'.
+
+            Initial Query:
+             {initial_query}
+
+            Final Response:
+            {final_response}"""
+
+        helpfullness_prompt_template = PromptTemplate.from_template(prompt_template)
+
+        helpfulness_chain = helpfullness_prompt_template | helpfulness_check_model | StrOutputParser()
+
+        helpfulness_response = helpfulness_chain.invoke({"initial_query" : initial_query.content, "final_response" : final_response.content})
+
+        if "Y" in helpfulness_response:
+            return END
+        else:
+            return "action"
+    # Build graph
+    graph_with_helpfulness = StateGraph(AgentState)
+    tool_node = ToolNode(tools)
+    
+    graph_with_helpfulness.add_node("agent", call_model)
+    graph_with_helpfulness.add_node("action", tool_node)
+    graph_with_helpfulness.set_entry_point("agent")
+    graph_with_helpfulness.add_conditional_edges("agent", tool_call_or_helpful, {"action": "action", END: END})
+    graph_with_helpfulness.add_edge("action", "agent")
+    return graph_with_helpfulness.compile()
+
+    
+    
