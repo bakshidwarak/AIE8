@@ -40,4 +40,4 @@ What is the difference between serverless and dedicated endpoints?
 
 #### ✅ Answer:
 
-_(insert your answer here)_
+The main differences between Together AI's serverless and dedicated API endpoints lie in the infrastructure, performance, control, and cost model. Serverless offers automatic management and a pay-per-use model, while dedicated provides guaranteed performance and full control over private, reserved resources.
